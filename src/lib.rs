@@ -175,12 +175,12 @@ pub struct SliceRingImpl<T> {
     /// index into `buf` of the first element that could be read.
     /// only gets incremented, never decremented.
     /// wraps around.
-    pub first_readable: usize,
+    first_readable: usize,
     /// index into `buf` where the next element could we written.
     /// only gets incremented, never decremented.
     /// wraps around at `buf.cap()`.
-    pub next_writable: usize,
-    pub buf: Vec<T>,
+    next_writable: usize,
+    buf: Vec<T>,
 }
 
 /// Calculate the number of elements left to be read in the buffer
