@@ -408,6 +408,9 @@ impl<T: Clone> SliceRing<T> for SliceRingImpl<T> {
             // extra operations during the loop can prevent this optimisation.
             unsafe {
                 let dst = output.get_unchecked_mut(i);
+                if std::mem::needs_drop::<T>() {
+                    std::ptr::drop_in_place(dst);
+                }
                 let src_index = self.wrap_add(self.first_readable, i);
                 let src = (*self.buf.as_ptr().add(src_index)).clone();
                 ptr::write(dst, src);
