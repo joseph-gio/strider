@@ -410,7 +410,7 @@ impl<T: Clone> SliceRing<T> for SliceRingImpl<T> {
                 let dst = output.as_mut_ptr().add(i);
                 let src_index = self.wrap_add(self.first_readable, i);
                 let src = (*self.buf.as_ptr().add(src_index)).clone();
-                // NOTE: Drop the dst value as late as possible in case a panic occursin the Clone impl
+                // NOTE: Drop the dst value as late as possible in case a panic occurs in the Clone impl
                 if std::mem::needs_drop::<T>() {
                     std::ptr::drop_in_place(dst);
                 }
