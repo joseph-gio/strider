@@ -382,7 +382,7 @@ impl<T: Clone> SliceRing<T> for SliceRingImpl<T> {
             // each copy consecutive elements
             unsafe {
                 let dst_index = self.wrap_add(self.next_writable, i);
-                let dst = self.buf.get_unchecked_mut(dst_index);
+                let dst = self.buf.as_mut_ptr().add(dst_index);
                 let src = input.get_unchecked(i).clone();
                 ptr::write(dst, src);
             }
@@ -409,7 +409,7 @@ impl<T: Clone> SliceRing<T> for SliceRingImpl<T> {
             unsafe {
                 let dst = output.get_unchecked_mut(i);
                 let src_index = self.wrap_add(self.first_readable, i);
-                let src = self.buf.get_unchecked(src_index).clone();
+                let src = (*self.buf.as_ptr().add(src_index)).clone();
                 ptr::write(dst, src);
             }
         }
